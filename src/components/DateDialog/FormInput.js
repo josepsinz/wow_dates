@@ -9,6 +9,7 @@ export default function FormInput({ type, value, label, setValue }) {
 
     return (
         <TextField
+            data-testid="input"
             id={label}
             style={{ margin: "2%" }}
             placeholder={"title"}
