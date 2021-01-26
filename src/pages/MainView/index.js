@@ -7,6 +7,12 @@ import SwitchMode from "../../components/SwitchMode";
 import eventFire from "../../utils/eventFire";
 import getColorDate from "../../utils/getColorDate";
 
+/**
+ * Main Component of the app.
+ * Renders the calendar and its functionalities
+ * @component
+ * @returns {React.ReactElement}
+ */
 export default function MainView() {
     const calendar = createRef();
     const [mode, setMode] = useState("add")
@@ -23,10 +29,18 @@ export default function MainView() {
         title: 'This is an event'
     }])
 
+    /**
+     * Hides an element of the DOM before the component is mounted  
+     */
     useEffect(() => {
         document.getElementsByClassName("modeButton")[2].style.visibility = "hidden"
     }, [])
 
+    /**
+     * This function is called when touch a day in the calendar.
+     * It opens the modal to add a new date.
+     * @param {object} e Info emmited when touch a day in calendar 
+     */
     const clickDay = (e) => {
         const { mode, ...dateInfo } = e
         if (mode === "dailyMode") {
@@ -39,6 +53,12 @@ export default function MainView() {
         }
     }
 
+    /**
+     * Opens the modal. 
+     * (Previously it fires automatically 
+     * the Month button at the top of the page
+     * to prevent the access to list day agenda)
+     */
     const handleOpenModal = () => {
         if (mode === "add") {
             eventFire(document.getElementsByClassName('modeButton')[1], 'click');
@@ -46,6 +66,11 @@ export default function MainView() {
         }
     };
 
+    /**
+     * Add new event to calendar. Then it throws a toast if
+     * there is a new event to add
+     * @param {object} newObj Contains the new date info 
+     */
     const handleCloseModal = (newObj) => {
         setOpen(false);
         if (newObj) {
@@ -59,10 +84,17 @@ export default function MainView() {
         }
     };
 
+    /**
+     * Fires automatically when autoHides finish or if we close the toast
+     */
     const closeToast = () => {
         setOpenToast(false)
     }
 
+    /**
+     * Changes the switchmode info and the app mode
+     * @param {object} event Contains the event emmited by SwitchMode component
+     */
     const handleChangeMode = (event) => {
         setModeSwitch({ ...modeSwitch, [event.target.name]: event.target.checked });
         modeSwitch.list ? setMode("add") : setMode("list")

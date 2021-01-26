@@ -1,3 +1,8 @@
+/**
+ * Returns the css color depending on date priority 
+ * @param {string} level Priority
+ * @returns {strign} The resulting css color  
+ */
 export default function getColorDate(level) {
     switch (level) {
         case "low":
